@@ -45,6 +45,7 @@ class Tetris:
                 if self.current_block.moving_down == False:
                     self._register_block()
                     self._update_grid()
+                    self.settings.increase_speed()
                     self._switch_block()
             
             self._update_screen()
@@ -126,6 +127,7 @@ class Tetris:
                 new_row = [0 for _ in range(self.settings.columns)]
                 self.board.grid.insert(0,new_row)
                 self._update_blocks(current_row)
+                self.settings.full_row_count += 1
             else:
                 current_row -=1
 

@@ -1,10 +1,10 @@
-from block_data import block_types as b_types, color_types as b_colors
+from block_data import block_types, color_types 
 
 class Settings:
     """A class to store all settings for Tetris."""
 
     def __init__(self):
-        """Initialize the game's settings."""
+        """Initialize the game's static settings."""
         # Screen settings
         self.screen_width = 1200
         self.screen_height = 800
@@ -23,17 +23,32 @@ class Settings:
         # Block settings
         self.square_length = 50
         self.margin_color = (0,0,0)
-        self.block_types = b_types
-        self.color_types = b_colors
+        self.block_types = block_types
+        self.color_types = color_types
 
         # Number of rows and columns in game board array
         self.rows = int(self.board_height / self.square_length)
         self.columns = int(self.board_width / self.square_length)
 
-        # Time settings
-        self.move_delay = 300
-        self.fall_delay = 800
+        # Initial time stamps
         self.last_move_time = 0
         self.last_fall_time = 0
 
-    
+        # Delay for horizontal movement.
+        self.move_delay = 250
+
+        # How quickly game speeds by increasing falling speed.
+        self.speedup_scale = 0.9
+
+        self.initialize_dynamic_settings()
+
+    def initialize_dynamic_settings(self):
+        """Initialize settings that change throughout the game."""
+        self.fall_delay = 800
+        self.full_row_count = 0
+
+    def increase_speed(self):
+        """Increase speed settings."""
+        # Increase falling speed after 10 full rows have been detected.
+        if self.full_row_count%10 ==0 and self.full_row_count > 0:
+            self.fall_delay *= self.speedup_scale

@@ -1,3 +1,9 @@
+"""
+This module stores:
+ - block_types: Occupied cells for each different color and orientation.
+ - block_colors: RBG colors for each block type.
+"""
+
 block_types = {
     'blue': {0:[(0,0),(0,1),(1,1),(2,1)], 90:[(1,0),(2,0),(1,1),(1,2)],
     180:[(0,1),(1,1),(2,1),(2,2)], 270:[(1,0),(1,1),(0,2),(1,2)]}, 

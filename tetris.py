@@ -70,8 +70,10 @@ class Tetris:
         """Start a new game when the player clicks Play."""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_active:
-            self.game_active = True
+            self.settings.initialize_dynamic_settings()
             self.all_blocks.empty()
+            self.board.initialize_grid()
+            self.game_active = True
 
             if not self.first_game:
                 self.choice = self._random_block()

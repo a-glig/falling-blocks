@@ -22,14 +22,17 @@ class Board:
             self.settings.board_height + 2*self.width)
         self.frame.center = self.screen_rect.center 
         
-        # Start with zero matrix corresponding to empty board.
-        self.grid = [
-            [0]*self.settings.columns for _ in range(self.settings.rows)
-        ]
-
-        self.full_rows = [False for _ in range(t_game.settings.rows)]
+        self.initialize_grid()
 
     def draw_board(self):
         """Draw the board and frame to the screen."""
         pygame.draw.rect(self.screen, self.color_inner, self.rect)
         pygame.draw.rect(self.screen, self.color_outer, self.frame, self.width)
+
+    def initialize_grid(self):
+        """Initialize empty grid. 0 (1) represents empty (filled) cell."""
+        self.grid = [ 
+            [0]*self.settings.columns for _ in range(self.settings.rows)
+        ]
+        # Helper variable to keep track of filled rows
+        self.full_rows = [False for _ in range(self.settings.rows)]

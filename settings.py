@@ -40,15 +40,14 @@ class Settings:
         # How quickly game speeds by increasing falling speed.
         self.speedup_scale = 0.9
 
+        # Scoring settings. Key: Number of filled rows, value: points
+        self.points= {1:40, 2:100, 3:300, 4:1200}
+
         self.initialize_dynamic_settings()
 
     def initialize_dynamic_settings(self):
         """Initialize settings that change throughout the game."""
         self.fall_delay = 800
-        self.full_row_count = 0
+        self.full_rows_total = 0
 
-    def increase_speed(self):
-        """Increase speed settings."""
-        # Increase falling speed after 10 full rows have been detected.
-        if self.full_row_count%10 ==0 and self.full_row_count > 0:
-            self.fall_delay *= self.speedup_scale
+    

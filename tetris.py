@@ -7,6 +7,8 @@ from settings import Settings
 
 from block import Block
 from board import Board
+from game_stats import GameStats
+from scoreboard import ScoreBoard
 from button import Button
 
 class Tetris:
@@ -21,6 +23,10 @@ class Tetris:
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Tetris")
+        
+        self.stats = GameStats(self)
+        self.sb = ScoreBoard(self)
+        
         self.board = Board(self)
         
         self.all_blocks = pygame.sprite.Group()
@@ -45,7 +51,8 @@ class Tetris:
                 if self.current_block.moving_down == False:
                     self._register_block()
                     self._update_grid()
-                    self.settings.increase_speed()
+                    self._update_score()
+                    self._update_level()
                     self._switch_block()
             
             self._update_screen()
@@ -70,6 +77,10 @@ class Tetris:
         """Start a new game when the player clicks Play."""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_active:
+            self.stats.reset_stats()
+            self.sb.prep_score()
+            self.sb.prep_level()
+            
             self.settings.initialize_dynamic_settings()
             self.all_blocks.empty()
             self.board.initialize_grid()
@@ -122,6 +133,7 @@ class Tetris:
 
     def _update_grid(self):
         """Update grid if full rows appear and shift blocks accordingly."""
+        self.full_rows_current = 0
         current_row = self.settings.rows - 1
         while current_row >= 0:
             if all(entry == 1 for entry in self.board.grid[current_row]):
@@ -129,9 +141,29 @@ class Tetris:
                 new_row = [0 for _ in range(self.settings.columns)]
                 self.board.grid.insert(0,new_row)
                 self._update_blocks(current_row)
-                self.settings.full_row_count += 1
+                
+                # Update row count
+                self.settings.full_rows_total += 1
+                self.full_rows_current += 1
+
             else:
                 current_row -=1
+
+    def _update_score(self):
+        """Update player score by checking the number of rows that were filled."""
+        if self.full_rows_current > 0:
+            row_points = self.settings.points[self.full_rows_current]
+            self.stats.score += row_points*self.stats.level 
+            self.sb.prep_score()
+
+    def _update_level(self):
+        """Increase level and speed of the falling blocks."""
+        # Level increases after 10 full rows have been detected.
+        if (self.settings.full_rows_total%10 ==0 and 
+                self.settings.full_rows_total > 0):
+            self.stats.level += 1
+            self.sb.prep_level()
+            self.settings.fall_delay *= self.settings.speedup_scale
 
     def _update_blocks(self,row):
         """Delete blocks in a full line and move all higher blocks down."""
@@ -163,6 +195,9 @@ class Tetris:
         for square in self.all_blocks.sprites():
             self.current_block.draw_single(square)   
         self.current_block.draw_block()
+        
+        self.sb.show_score()
+        
         if not self.game_active:
             self.play_button.draw_button()
         

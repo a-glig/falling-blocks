@@ -8,7 +8,7 @@ from settings import Settings
 from block import Block
 from board import Board
 from game_stats import GameStats
-from scoreboard import ScoreBoard
+from user_interface import UserInterface
 from button import Button
 
 class Tetris:
@@ -25,9 +25,8 @@ class Tetris:
         pygame.display.set_caption("Tetris")
         
         self.stats = GameStats(self)
-        self.sb = ScoreBoard(self)
-        
         self.board = Board(self)
+        self.ui = UserInterface(self)
         
         self.all_blocks = pygame.sprite.Group()
         self.choice = self._random_block()
@@ -51,8 +50,8 @@ class Tetris:
                 if self.current_block.moving_down == False:
                     self._register_block()
                     self._update_grid()
-                    self.sb.update_score(self)
-                    self.sb.check_high_score()
+                    self.ui.update_score(self)
+                    self.ui.check_high_score()
                     self._update_level()
                     self._switch_block()
             
@@ -79,8 +78,8 @@ class Tetris:
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_active:
             self.stats.reset_stats()
-            self.sb.prep_score()
-            self.sb.prep_level()
+            self.ui.prep_score()
+            self.ui.prep_level()
             
             self.settings.initialize_dynamic_settings()
             self.all_blocks.empty()
@@ -156,7 +155,7 @@ class Tetris:
         if (self.settings.full_rows_total%10 ==0 and 
                 self.settings.full_rows_total > (self.stats.level-1)*10):
             self.stats.level += 1
-            self.sb.prep_level()
+            self.ui.prep_level()
             self.settings.fall_delay *= self.settings.speedup_scale
 
     def _update_blocks(self,row):
@@ -190,7 +189,8 @@ class Tetris:
             self.current_block.draw_single(square)   
         self.current_block.draw_block()
         
-        self.sb.show_score()
+        self.ui.show_controls()
+        self.ui.show_score()
         
         if not self.game_active:
             self.play_button.draw_button()

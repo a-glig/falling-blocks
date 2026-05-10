@@ -19,7 +19,7 @@ class Settings:
 
         self.frame_width = 5
         self.frame_color = (26, 89, 150)
-        
+
         # Block settings
         self.square_length = 50
         self.margin_color = (0,0,0)

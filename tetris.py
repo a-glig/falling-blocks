@@ -51,7 +51,8 @@ class Tetris:
                 if self.current_block.moving_down == False:
                     self._register_block()
                     self._update_grid()
-                    self._update_score()
+                    self.sb.update_score(self)
+                    self.sb.check_high_score()
                     self._update_level()
                     self._switch_block()
             
@@ -149,18 +150,11 @@ class Tetris:
             else:
                 current_row -=1
 
-    def _update_score(self):
-        """Update player score by checking the number of rows that were filled."""
-        if self.full_rows_current > 0:
-            row_points = self.settings.points[self.full_rows_current]
-            self.stats.score += row_points*self.stats.level 
-            self.sb.prep_score()
-
     def _update_level(self):
         """Increase level and speed of the falling blocks."""
-        # Level increases after 10 full rows have been detected.
+        # Level increases each time 10 full rows have been detected.
         if (self.settings.full_rows_total%10 ==0 and 
-                self.settings.full_rows_total > 0):
+                self.settings.full_rows_total > (self.stats.level-1)*10):
             self.stats.level += 1
             self.sb.prep_level()
             self.settings.fall_delay *= self.settings.speedup_scale

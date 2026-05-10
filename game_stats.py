@@ -6,6 +6,8 @@ class GameStats:
         self.settings = t_game.settings
         self.reset_stats()
 
+        self.high_score = 0
+
     def reset_stats(self):
         """Initialize statistics that can change during the game."""
         self.score = 0

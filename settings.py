@@ -11,8 +11,8 @@ class Settings:
         self.bg_color = (230,230,230)
 
         # Board and frame settings
-        self.board_width = 500
-        self.board_height = 600
+        self.board_width = 400
+        self.board_height = 640
         self.board_color = (230,230,230)
         self.board_x = int((self.screen_width - self.board_width)/2)
         self.board_y = int((self.screen_height - self.board_height)/2)
@@ -21,7 +21,7 @@ class Settings:
         self.frame_color = (26, 89, 150)
 
         # Block settings
-        self.square_length = 50
+        self.square_length = 40
         self.margin_color = (0,0,0)
         self.block_types = block_types
         self.color_types = color_types

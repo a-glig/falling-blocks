@@ -34,7 +34,8 @@ class Block(Sprite):
         self.box = pygame.Rect(0,0,self.longest_side, self.longest_side)
         self.box.topleft = t_game.board.rect.topleft
 
-        self._adjust_block_position()
+        self._adjust_horizontal_position()
+        self._adjust_vertical_position()
 
         # Movement flags; start with block that's not moving horizontally, 
         # but does fall vertically
@@ -53,7 +54,15 @@ class Block(Sprite):
         pygame.draw.rect(self.screen, self.margin_color, s)
         pygame.draw.rect(self.screen, s.color, s.rect.inflate(-2,-2))
 
-    def _adjust_block_position(self):
+    def _adjust_horizontal_position(self):
+        """Each block starts at the center of the board."""
+        incr = 4 if self.type == 'yellow' else 3
+        for r in self.rects:
+            r.x += incr*self.length
+        self.rect.x += incr*self.length
+        self.box.x += incr*self.length
+    
+    def _adjust_vertical_position(self):
         """Make sure that all blocks are created in the top layer."""
         while self.rect.top > self.board.rect.top:
             for r in self.rects:

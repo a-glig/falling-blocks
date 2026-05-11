@@ -44,8 +44,8 @@ class Tetris:
             
             if self.game_active:
                 self.current_block.update_horizontal(self)
-                self.current_block.update_vertical(self)
                 self.current_block.check_collisions_horizontal()
+                self.current_block.update_vertical(self)
                 self.current_block.check_collisions_vertical()
                 if self.current_block.moving_down == False:
                     self._register_block()

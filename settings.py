@@ -1,7 +1,7 @@
 from block_data import block_types, color_types 
 
 class Settings:
-    """A class to store all settings for Tetris."""
+    """A class to store all settings for the game Block Puzzle."""
 
     def __init__(self):
         """Initialize the game's static settings."""

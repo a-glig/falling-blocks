@@ -11,7 +11,7 @@ from game_stats import GameStats
 from user_interface import UserInterface
 from button import Button
 
-class Tetris:
+class BlockPuzzle:
     """Overall class to manage game assets and behavior."""
 
     def __init__(self):
@@ -22,7 +22,7 @@ class Tetris:
 
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))
-        pygame.display.set_caption("Tetris")
+        pygame.display.set_caption("Block Puzzle")
         
         self.stats = GameStats(self)
         self.board = Board(self)
@@ -102,7 +102,7 @@ class Tetris:
             self.current_block.moving_left = True
         elif event.key == pygame.K_SPACE:
             if self.game_active:
-                self.current_block.move_to_bottom(self)
+                self.current_block.move_to_bottom()
         elif event.key == pygame.K_UP:
             if self.game_active:
                 self.current_block.rotate(self.choice)
@@ -199,5 +199,5 @@ class Tetris:
     
 if __name__ == '__main__':
     # Make a game instance, and run the game.
-    t = Tetris()
-    t.run_game()
+    bp = BlockPuzzle()
+    bp.run_game()

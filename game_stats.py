@@ -1,9 +1,9 @@
 class GameStats:
-    """Track statistics for the Tetris game."""
+    """Track statistics for the game Block Puzzle."""
 
-    def __init__(self, t_game):
+    def __init__(self, bp_game):
         """Initialize statistics."""
-        self.settings = t_game.settings
+        self.settings = bp_game.settings
         self.reset_stats()
 
         self.high_score = 0

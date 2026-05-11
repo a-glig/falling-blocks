@@ -4,14 +4,14 @@ from pygame.sprite import Sprite
 class Block(Sprite):
     """A class to manage a block that the player controls."""
 
-    def __init__ (self, t_game, type):
+    def __init__ (self, bp_game, type):
         """Create a block at the top of the board."""
         super().__init__()
-        self.screen = t_game.screen
-        self.screen_rect = t_game.screen.get_rect()
-        self.settings= t_game.settings
-        self.board = t_game.board
-        self.all_blocks = t_game.all_blocks
+        self.screen = bp_game.screen
+        self.screen_rect = bp_game.screen.get_rect()
+        self.settings= bp_game.settings
+        self.board = bp_game.board
+        self.all_blocks = bp_game.all_blocks
 
         # Block settings
         self.type = type
@@ -32,7 +32,7 @@ class Block(Sprite):
 
         # Reference rectangle for performing rotations
         self.box = pygame.Rect(0,0,self.longest_side, self.longest_side)
-        self.box.topleft = t_game.board.rect.topleft
+        self.box.topleft = bp_game.board.rect.topleft
 
         self._adjust_horizontal_position()
         self._adjust_vertical_position()
@@ -70,16 +70,16 @@ class Block(Sprite):
             self.rect.y -= self.length
             self.box.y -= self.length
 
-    def update_horizontal(self,t_game):
+    def update_horizontal(self,bp_game):
         """Update the block's horizontal position based on movement flags."""
-        if  (t_game.current_time - self.settings.last_move_time > 
+        if  (bp_game.current_time - self.settings.last_move_time > 
                 self.settings.move_delay) and self.moving_down:
             if self.rect.right < self.board.rect.right and self.moving_right:
                 self._move_horizontal(1)
-                self.settings.last_move_time = t_game.current_time
+                self.settings.last_move_time = bp_game.current_time
             if self.rect.left > self.board.rect.left and self.moving_left:
                 self._move_horizontal(-1)
-                self.settings.last_move_time = t_game.current_time
+                self.settings.last_move_time = bp_game.current_time
 
     def _move_horizontal(self, dir):
         """Move block by one block length to the left/right."""
@@ -88,13 +88,13 @@ class Block(Sprite):
         self.rect.x += dir*self.length
         self.box.x += dir*self.length
         
-    def update_vertical(self,t_game):
+    def update_vertical(self,bp_game):
         """Update the block's vertical position at constant rate."""
-        if (t_game.current_time - self.settings.last_fall_time >
+        if (bp_game.current_time - self.settings.last_fall_time >
                 self.settings.fall_delay) and self.moving_down:  
             if self.rect.bottom < self.board.rect.bottom:
                 self.move_vertical(1)
-                self.settings.last_fall_time = t_game.current_time
+                self.settings.last_fall_time = bp_game.current_time
         if self.rect.bottom >= self.board.rect.bottom:
             self.moving_down = False
 
@@ -106,7 +106,7 @@ class Block(Sprite):
         self.box.y += dir*self.length
         
 
-    def move_to_bottom(self,t_game):
+    def move_to_bottom(self):
         """Pushes block down to lowest unoccupied space."""
         while self.moving_down == True:
             for square in self.rects:

@@ -3,11 +3,11 @@ import pygame
 class Board:
     """A class to manage block coniguration on the game board."""
 
-    def __init__(self, t_game):
+    def __init__(self, bp_game):
         """Initialize board attributes."""
-        self.screen = t_game.screen
+        self.screen = bp_game.screen
         self.screen_rect = self.screen.get_rect()
-        self.settings = t_game.settings
+        self.settings = bp_game.settings
         self.color_inner = self.settings.board_color
         self.color_outer = self.settings.frame_color
         self.width = self.settings.frame_width

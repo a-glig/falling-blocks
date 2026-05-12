@@ -1,4 +1,4 @@
-# Block puzzle
+# Falling Blocks
 A personal pygame project inspired by Tetris-style gameplay.
 
 Prevent the falling blocks from stacking up to the top by arranging them to fill 

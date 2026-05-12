@@ -32,8 +32,8 @@ out horizontal lines.
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/a-glig/block-puzzle-game.git
-cd block-puzzle-game
+git clone https://github.com/a-glig/falling-blocks.git
+cd falling-blocks
 ```
 
 ### 2. Install dependencies
@@ -45,7 +45,7 @@ pip install -r requirements.txt
 ### 3. Run the game
 
 ```bash
-python block_puzzle.py
+python falling_blocks.py
 ```
 
 ---

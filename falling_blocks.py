@@ -11,7 +11,7 @@ from game_stats import GameStats
 from user_interface import UserInterface
 from button import Button
 
-class BlockPuzzle:
+class FallingBlocks:
     """Overall class to manage game assets and behavior."""
 
     def __init__(self):
@@ -22,12 +22,13 @@ class BlockPuzzle:
 
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))
-        pygame.display.set_caption("Block Puzzle")
+        pygame.display.set_caption("Falling Blocks")
         
         self.stats = GameStats(self)
         self.board = Board(self)
         self.ui = UserInterface(self)
         
+        # Sprite group contains all blocks that have landed.
         self.all_blocks = pygame.sprite.Group()
         self.choice = self._random_block()
         self.current_block = Block(self, self.choice)
@@ -128,8 +129,10 @@ class BlockPuzzle:
 
     def _get_grid_position(self, r):
         """Determine (x,y)-position of a block in the grid."""
-        return (int((r.x - self.board.rect.x)/self.settings.square_length),
-        int((r.y - self.board.rect.y)/self.settings.square_length))
+        return (
+            int((r.x - self.board.rect.x)/self.settings.square_length),
+            int((r.y - self.board.rect.y)/self.settings.square_length)
+        )
 
     def _update_grid(self):
         """Update grid if full rows appear and shift blocks accordingly."""
@@ -137,12 +140,13 @@ class BlockPuzzle:
         current_row = self.settings.rows - 1
         while current_row >= 0:
             if all(entry == 1 for entry in self.board.grid[current_row]):
+                # Delete full row and add insert row at the top.
                 del self.board.grid[current_row]
                 new_row = [0 for _ in range(self.settings.columns)]
                 self.board.grid.insert(0,new_row)
                 self._update_blocks(current_row)
                 
-                # Update row count
+                # Update row count.
                 self.settings.full_rows_total += 1
                 self.full_rows_current += 1
 
@@ -199,5 +203,5 @@ class BlockPuzzle:
     
 if __name__ == '__main__':
     # Make a game instance, and run the game.
-    bp = BlockPuzzle()
-    bp.run_game()
+    fb = FallingBlocks()
+    fb.run_game()

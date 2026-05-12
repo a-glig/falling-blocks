@@ -79,6 +79,15 @@ This project helped me practice:
 
 ---
 
+## Credits
+
+This project was inspired by concepts and techniques presented in the book 
+"Python Crash Course - 3rd Edition" by Eric Matthes. While following the book's
+development of a different game as a learning exercise, I applied the ideas 
+independently to create this project.
+
+---
+
 ## License
 
 This project is licensed under the MIT License.

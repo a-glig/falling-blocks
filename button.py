@@ -3,9 +3,9 @@ import pygame.font
 class Button:
     """A class to build buttons for the game."""
 
-    def __init__ (self, bp_game, msg):
+    def __init__ (self, fb_game, msg):
         """Initialize button attributes."""
-        self.screen = bp_game.screen
+        self.screen = fb_game.screen
         self.screen_rect = self.screen.get_rect()
 
         # Set the dimensions and properties of the button.

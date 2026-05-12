@@ -3,13 +3,13 @@ import pygame.font
 class UserInterface:
     """A class to show elements that communicate information to the player."""
 
-    def __init__(self, bp_game):
+    def __init__(self,fb_game):
         """Initialize scorekeeping attributes."""
-        self.screen = bp_game.screen
+        self.screen = fb_game.screen
         self.screen_rect = self.screen.get_rect()
-        self.settings = bp_game.settings
-        self.board = bp_game.board
-        self.stats = bp_game.stats
+        self.settings = fb_game.settings
+        self.board = fb_game.board
+        self.stats = fb_game.stats
 
         # Font settings for scoring information.
         self.text_color = (30,30,30)
@@ -53,15 +53,15 @@ class UserInterface:
         self.level_image = self.font.render(level_str, True,
             self.text_color, self.settings.bg_color)
 
-        # Position the level below the score
+        # Position the level below the score.
         self.level_rect = self.level_image.get_rect()
         self.level_rect.right = self.score_rect.right
         self.level_rect.top = self.score_rect.bottom + 10
 
-    def update_score(self, bp_game):
+    def update_score(self, fb_game):
         """Update player score by checking the number of rows that were filled."""
-        if bp_game.full_rows_current > 0:
-            row_points = self.settings.points[bp_game.full_rows_current]
+        if fb_game.full_rows_current > 0:
+            row_points = self.settings.points[fb_game.full_rows_current]
             self.stats.score += row_points*self.stats.level 
             self.prep_score()
 

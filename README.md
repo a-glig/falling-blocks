@@ -56,7 +56,7 @@ python block_puzzle.py
 - Left Arrow : Move left 
 - Right Arrow : Move right 
 
-- Space | Hard Drop 
+- Space : Hard Drop 
 
 ---
 

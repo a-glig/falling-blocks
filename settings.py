@@ -8,17 +8,17 @@ class Settings:
         # Screen settings.
         self.screen_width = 1200
         self.screen_height = 800
-        self.bg_color = (230,230,230)
+        self.bg_color = (18,22,32)
 
         # Board and frame settings.
         self.board_width = 400
         self.board_height = 640
-        self.board_color = (230,230,230)
+        self.board_color = (25,31,45)
         self.board_x = int((self.screen_width - self.board_width)/2)
         self.board_y = int((self.screen_height - self.board_height)/2)
 
         self.frame_width = 5
-        self.frame_color = (26, 89, 150)
+        self.frame_color = (75,90,115)
 
         # Block settings.
         self.square_length = 40

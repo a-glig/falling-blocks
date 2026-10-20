@@ -11,8 +11,8 @@ class UserInterface:
         self.board = fb_game.board
         self.stats = fb_game.stats
 
-        # Font settings for scoring information.
-        self.text_color = (30,30,30)
+        # Settings for scoring information.
+        self.text_color = (255, 255, 255)
         self.font = pygame.font.SysFont(None, 48)
 
         # Prepare the initial score image.

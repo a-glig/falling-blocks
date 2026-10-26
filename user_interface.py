@@ -1,10 +1,12 @@
 import pygame.font
+from ui_elements import StatisticsBox
 
 class UserInterface:
     """A class to show elements that communicate information to the player."""
 
     def __init__(self,fb_game):
         """Initialize scorekeeping attributes."""
+        self.fb_game = fb_game
         self.screen = fb_game.screen
         self.screen_rect = self.screen.get_rect()
         self.settings = fb_game.settings
@@ -41,22 +43,7 @@ class UserInterface:
     def prep_high_score(self):
         """Turn the high score into a rendered image."""
         label, value = "High score", f"{self.stats.high_score:,}"
-
-        self.stats_rect = pygame.Rect(0, 0, self.stats_rect_width, 
-            self.stats_rect_height)
-        self.stats_rect.midtop = self.screen_rect.midtop
-        
-        self.high_score_label = self.font.render(label, True, 
-            self.text_color, self.settings.bg_color)
-        self.high_score_value = self.font.render(value, True, 
-            self.text_color, self.settings.bg_color)
-        
-        self.high_score_label_rect = self.high_score_label.get_rect(center =
-                (self.stats_rect.centerx, self.stats_rect.top + 20)
-        )
-        self.high_score_value_rect = self.high_score_value.get_rect(center =
-                (self.stats_rect.centerx, self.stats_rect.top + 52)
-        )
+        self.high_score = StatisticsBox(self.fb_game, label, value)
 
     def prep_level(self):
         """Turn the level into a rendered image."""
@@ -85,9 +72,7 @@ class UserInterface:
     def show_score(self):
         """Draw score to the screen."""
         self.screen.blit(self.score_image, self.score_rect)
-        self.screen.blit(self.high_score_label, self.high_score_label_rect)
-        self.screen.blit(self.high_score_value, self.high_score_value_rect)
-        pygame.draw.rect(self.screen, (75, 90, 115), self.stats_rect, width=5)
+        self.high_score.draw()
         self.screen.blit(self.level_image, self.level_rect)
 
     def position_controls(self):

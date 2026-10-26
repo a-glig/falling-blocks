@@ -4,7 +4,7 @@ class StatisticsBox:
     """A class to display current game statistics in a box."""
 
     def __init__(self, fb_game, label, value):
-        """Initialize components of the box."""
+        """Initialize components of the statistics box."""
         self.screen = fb_game.screen
         self.settings = fb_game.settings
         
@@ -26,7 +26,20 @@ class StatisticsBox:
             center = (self.rect.centerx, self.rect.top + 70)
         )
 
+    def set_position(self, position):
+        """Set position of outer box and text."""
+        self.rect.midtop = position
+        
+        self.label_rect = self.label_img.get_rect(
+                center = (self.rect.centerx, self.rect.top + 30)
+        )
+        self.value_rect = self.value_img.get_rect(
+                center = (self.rect.centerx, self.rect.top + 70)
+        )
+
     def draw(self):
+        """Draw statistics box to the screen."""
         self.screen.blit(self.label_img, self.label_rect)
         self.screen.blit(self.value_img, self.value_rect)
+        
         pygame.draw.rect(self.screen, (75, 90, 115), self.rect, width=5)

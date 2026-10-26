@@ -13,12 +13,6 @@ class UserInterface:
         self.board = fb_game.board
         self.stats = fb_game.stats
 
-        # Settings for scoring information.
-        self.text_color = (255, 255, 255)
-        self.font = pygame.font.SysFont(None, 48)
-        self.stats_rect_width = 200
-        self.stats_rect_height = 80
-
         # Prepare the initial score image.
         self.prep_score()
         self.prep_high_score()
@@ -31,30 +25,33 @@ class UserInterface:
 
     def prep_score(self):
         """Turn the score into a rendered image."""
-        score_str = "Score: " + f"{self.stats.score:,}"
-        self.score_image = self.font.render(score_str, True, 
-            self.text_color, self.settings.bg_color)
+        label, value = "Score", f"{self.stats.score:,}"
+        self.score = StatisticsBox(self.fb_game, label, value)
     
-        # Display the score at the top right of the screen.
-        self.score_rect = self.score_image.get_rect()
-        self.score_rect.right = self.screen_rect.right - 20
-        self.score_rect.top = 20
+        x = self.board.rect.right + (
+                self.screen_rect.right - self.board.rect.right) // 2 
+        y = self.board.rect.top 
+        self.score.set_position((x,y))
 
     def prep_high_score(self):
         """Turn the high score into a rendered image."""
         label, value = "High score", f"{self.stats.high_score:,}"
         self.high_score = StatisticsBox(self.fb_game, label, value)
 
+        x = self.board.rect.right + (
+                self.screen_rect.right - self.board.rect.right) // 2 
+        y = self.score.rect.top + 150
+        self.high_score.set_position((x,y))
+
     def prep_level(self):
         """Turn the level into a rendered image."""
-        level_str = "Level: " + str(self.stats.level)
-        self.level_image = self.font.render(level_str, True,
-            self.text_color, self.settings.bg_color)
+        label, value = "Level", str(self.stats.level)
+        self.level = StatisticsBox(self.fb_game, label, value)
 
-        # Position the level below the score.
-        self.level_rect = self.level_image.get_rect()
-        self.level_rect.right = self.score_rect.right
-        self.level_rect.top = self.score_rect.bottom + 10
+        x = self.board.rect.right + (
+                self.screen_rect.right - self.board.rect.right) // 2 
+        y = self.high_score.rect.top + 150
+        self.level.set_position((x,y))
 
     def update_score(self, fb_game):
         """Update player score by checking the number of rows that were filled."""
@@ -71,9 +68,9 @@ class UserInterface:
 
     def show_score(self):
         """Draw score to the screen."""
-        self.screen.blit(self.score_image, self.score_rect)
+        self.score.draw()
         self.high_score.draw()
-        self.screen.blit(self.level_image, self.level_rect)
+        self.level.draw()
 
     def position_controls(self):
         """Position image showing game controls."""

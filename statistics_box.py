@@ -13,6 +13,7 @@ class StatisticsBox:
         self.font = pygame.font.SysFont(None, 58)
 
         self.rect = pygame.Rect(0, 0, self.width, self.height)
+        self.rect_color = (75, 90, 115)
         
         self.label_img = self.font.render(label, True, 
             self.text_color, self.settings.bg_color)
@@ -42,4 +43,4 @@ class StatisticsBox:
         self.screen.blit(self.label_img, self.label_rect)
         self.screen.blit(self.value_img, self.value_rect)
         
-        pygame.draw.rect(self.screen, (75, 90, 115), self.rect, width=5)
+        pygame.draw.rect(self.screen, self.rect_color, self.rect, width=5)

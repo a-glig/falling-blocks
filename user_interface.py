@@ -1,5 +1,7 @@
-import pygame.font
-from ui_elements import StatisticsBox
+import pygame
+
+from statistics_box import StatisticsBox
+from controls import Controls
 
 class UserInterface:
     """A class to show elements that communicate information to the player."""
@@ -17,11 +19,9 @@ class UserInterface:
         self.prep_score()
         self.prep_high_score()
         self.prep_level()
-        
-        # Import and position image showing control settings
-        controls = pygame.image.load('images/controls.png')
-        self.controls_scaled = pygame.transform.smoothscale(controls, (250, 150))
-        self.position_controls()
+
+        # Control settings
+        self.controls_new = Controls(fb_game)
 
     def prep_score(self):
         """Turn the score into a rendered image."""
@@ -81,4 +81,4 @@ class UserInterface:
 
     def show_controls(self):
         """Draw control settings to the screen."""
-        self.screen.blit(self.controls_scaled, self.controls_rect)
+        self.controls_new.draw()

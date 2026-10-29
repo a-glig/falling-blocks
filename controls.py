@@ -12,11 +12,15 @@ class Controls:
         self.width = 2
         self.border_radius = 10
 
-        self.key_up = ArrowKey("up", "Rotate")
         self.key_down = ArrowKey("down")
+        self.key_up = ArrowKey("up", "Rotate")
+        self.key_left = ArrowKey("left","Left")
+        self.key_right = ArrowKey("right", "Right")
         
         self.position_key_down()
         self.position_key_up()
+        self.position_key_left()
+        self.position_key_right()
     
     def position_key_down(self):
         self.key_down.rect.centerx = self.board_rect.right + (
@@ -25,21 +29,30 @@ class Controls:
         self.key_down.position_arrow()
     
     def position_key_up(self):
-        self.key_up.rect.center = (
-            self.key_down.rect.centerx, self.key_down.rect.centery - 55
-        )
+        self.key_up.rect.center = (self.key_down.rect.centerx, 
+                self.key_down.rect.centery - 55)
         self.key_up.position_arrow()
         self.key_up.position_text(60)
 
+    def position_key_left(self):
+        self.key_left.rect.center = (self.key_down.rect.centerx - 55, 
+                self.key_down.rect.centery)
+        self.key_left.position_arrow()
+        self.key_left.position_text(-60)
+
+    def position_key_right(self):
+        self.key_right.rect.center = (self.key_down.rect.centerx + 55, 
+                self.key_down.rect.centery)
+        self.key_right.position_arrow()
+        self.key_right.position_text(60)
+
     def draw(self):
-        self.screen.blit(self.key_down.arrow, self.key_down.arrow_rect)
-        pygame.draw.rect(self.screen, self.key_color, 
-            self.key_down.rect, self.width, self.border_radius)
-        
-        self.screen.blit(self.key_up.arrow, self.key_up.arrow_rect)
-        self.screen.blit(self.key_up.text, self.key_up.text_rect)
-        pygame.draw.rect(self.screen, self.key_color, 
-            self.key_up.rect, self.width, self.border_radius)
+        for key in (self.key_down, self.key_up, self.key_left, self.key_right):
+            self.screen.blit(key.arrow, key.arrow_rect)
+            if key.text != None:
+                self.screen.blit(key.text, key.text_rect)
+            pygame.draw.rect(self.screen, self.key_color, key.rect, 
+                self.width, self.border_radius)
 
 class ArrowKey:
     """A visual representation of an arrow key."""
